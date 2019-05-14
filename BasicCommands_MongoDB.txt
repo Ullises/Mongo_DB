@@ -1,0 +1,50 @@
+#################### MongoDB Basic Commands###############
+
+////Log into MongoDB////
+1. >mongo -u <username> -p <password> --authenticationDatabase <dbo.name>
+////>show all databases
+2. show dbs
+////to use the databases and it creates if does not exists////
+3. >use dbo.reviews
+////show the list of commands available for helping////
+>help
+show dbs
+////Interacting with MongoDB////
+4.
+var market = {
+"name": "Oxxo"
+"Location": "North"
+"Owner": "Coca Cola"
+}
+////seing the contents of the variable////
+>market
+{
+"name": "Oxxo"
+"Location": "North"
+"Owner": "CocaCola"
+
+}
+////Insert documents in collection////
+5. >db.market.insert(
+{
+"name": "Oxxo",
+"Location": "North"
+"Owner": "CocaCola"
+  }
+)
+WriteResult({"nInserted": 1})
+////Finding all the markets////
+6. >db.market.find()
+{
+"_id": ObjectID(""645f9207hytr76535v098),
+"name:" "Oxxo"
+"Owner": "CocaCola"
+}
+
+////Find to return all the objects in a collection////
+7. >db.market.insert(...)
+WriteResult({"nInserted": 1})
+>db.market.insert(...)
+WriteResults({"nInserted": 1})
+>db.market.find()
+{"name": "Oxxo" ...}
