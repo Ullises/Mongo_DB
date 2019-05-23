@@ -1,0 +1,150 @@
+####Basic Commands of MongoDB####
+
+////The definition of the variable comes like the typical java programming language syntax////
+> var potion = {"name": "Invisibility", "vendor": "Kettlecooked"} ////Each category is separated by a comma
+
+///The way to access to the variable seing the assignations previously done////
+> potion 
+
+////How to add fields and values in the collection. The collection is generated instantaniously once the document is specified
+> db.potions.insert({ "name": "Invisibility", "vendor": "Kettlecooked" })
+
+////The find() command is used to see the data of the collection////
+> db.potions.find()
+
+//// If we do not specify an id for the elements in the collection, MongoDB automatically creates one for each.
+> db.potion.find()
+{ "_id" : ObjectId("5ce547051a261fe5809620c1"), "name" : "Invisibility", "vendor" : "Kettlecooked", "grade" : 85 }
+
+////It is possible to use find() along with an adition of a certain field to consult the information of the element////
+> db.potions.find({ "name": "Invisibility" })
+
+////How to add other fields like price, score, date, ratings, etc.
+> db.potions.insert({	"name": "Invisibility", "vendor": "Kettlecooked","price": 10.99,"score": 59,"tryDate": new Date(2012, 8, 13), #Format: (Year, Month, Day)"ingredients": ["new toes", 50, "laughter"],
+"ratings": {"strength": 2, "flavor": 5}})
+
+////Deleting some document using remove() command only if the this fulfills with other specefied variable 
+> db.potions.remove({"name": "Love"})
+
+
+////Using update() for modifying some values of the categories in documents, here the category field is being changed by another quantity////
+> db.potions.update({"name": "Love"}, {"$set": {"price": 3.99}}) 
+
+////multi along with update is used to modify the releted documents
+> db.potions.update({"vendor": "KC"}, {"$set": {"vendor": "Kettlecooked"}}, {"multi": true})
+
+////Using count to make records views or clicks in a long document, using "$inc" the count of an existed document is increased, updating or creating////
+> db.logs.update({"potion": "Shrinking"}, {"$inc": {"count": 1}})
+
+////We use "Upsert"parameter along with update() to create new documents considering the query's parameters
+> db.logs.update({"potion": "Love"}, {"$inc": {"count": 1}}, {"upsert": true}) #If upsert is true, it creates a new document; if not, then updates the existing log document.
+
+////Unusable fields can be removed with the parameter "$unset" and update()////
+> db.potions.update({}, {"$unset":{"color":""}}, {"multi":true}) ## The color field is removed
+
+////Renaming fields////
+> db.potions.update({}, {"$rename": {"score": "grade"}}, {"multi": true}) ##The score field is renamed with grade.
+
+////With the array we update the value of its value using "$set" specifying the index of the array
+> db.potions.update({"name": "Shrinking"}, {"$set": {"ingredients.1": 42}}) ##The value of the array in position 1 will change to 42.
+
+////Updating the value of several indexes of an array with more than one document, it is used a palceholder rather than the number of index of the array.
+> db.potions.update({"ingredients": "secret"}, {"$set": {"ingredients.$": 42}}, {"multi": true}) ##We have to specify the query that we want to make the change, in this case, the query is the secret ingredient.
+
+##To change values of embedded documents or dictionaries, it is similar, but instead of specify the number, we specify the name of the field:
+////Specifying the name of the field wen can change the values of embedded documents or dictionaries
+> db.potions.update({"name": "Shrinking"}, {"$set": {"ratings.strength": 5}})
+
+////Operations used with update()////
+Updates if new value is greater than current or inserts if empty.
+If a new value is greater than current it updates or insert depending if empty////
+////Updates if new value is less than current or inserts if empty.////
+$max
+////Ir a new value is less than one current, it updates or inserts if this is empty////
+$min
+It multiplies current field value by specified value. If empty, inserts 0.
+$mul
+
+## To remove the first or last value of an array we use "$pop" with update():
+////Removing the first/last value of an array using "$pop" with update()////
+> db.potions.update({"name": "Shrinking"}, {"$pop": {"categories": 1}})
+
+////Adding a value after the last element of an array using "$push"////
+> db.potions.update({"name": "Shrinking"}, {"$push": {"categories": "budget"}})
+
+////When adding just one value to an array, it is used "$addToSet" and it adds a value if this is not in the array////
+> db.potions.update({"name": "Shrinking"}, {"$addToSet": {"categories": "budget"}})
+
+////Removing whatever value togeter with its instances from the array using "%pull"////
+> db.potions.update({"name": "Shrinking"}, {"$pull": {"categories": "tasty"}})
+
+### Filters - Query Operators ###
+
+## To query with multiple criteria, we use find() in comma-separated query:
+	> db.potions.find({"vendor": "Kettlecooked", "ratings.strength": 5}) //In this case, it will only show potions made by Kettlecooked that have strength of 5.
+
+## Conditions - Common comparisons ##
+	$gt - greater than
+	$gte - greater than or equal to
+	$lt - less than
+	$lte - less than or equal to
+	$ne - not equal to
+//Some examples
+//Finding potions that are less than $20
+> db.potions.find({"price": {"$lt": 20}}) ////value less than 20////
+
+//Finding potions between prices
+> db.potions.find({"price": {"$gt":10,"$lt":20}}) ////value between 10 and 20/////
+
+///Queries of non-equality///
+> db.potions.find({"vendor": {"$ne": "Brewers"}}) ////vendor not equal to "brewers"////
+
+////Range queries on an array////
+> db.potions.find({"sizes": {"$elemMatch": {"gt": 8, "lt": 16}}}) ////At least one array value must be between the numbers 8 and 16////
+
+
+
+/////Questions and Answers about MongoDB/////
+1.What kind of NoSQL database MongoDB is?
+MongoDB is a document oriented database. It stores data in the form of BSON structure based documents. 
+These documents are stored in a collection.
+2.Which are the most important features of MongoDB?
+Flexible data model in form of documents
+Agile and highly scalable database
+Faster than traditional databases
+Expressive query language
+3.What is a Namespace in MongoDB?
+A Namespace is the concatenation of the database name and collection name. 
+For e.g. school.students with school as the database and students as the collection
+4.Which all languages can be used with MongoDB?
+Currently, MonggoDB provides official driver support for C, C++, C#, Java, Node.js, Perl, PHP, Python, Ruby, Scala, Go and Erlang. 
+MongoDB can easily be used with any of these languages. 
+There are some other community supported drivers too but the above mentioned ones are officially provided by MongoDB.}
+5.Compare SQL databases and MongoDB at a high level.}
+SQL databases store data in form of tables, rows, columns and records. This data is stored in a pre-defined data model which is not very much flexible for today's real-world highly growing applications. 
+MongoDB in contrast uses a flexible structure which can be easily modified and extended.
+6.How is MongoDB better than other SQL databases?
+MongoDB allows a highly flexible and scalable document structure. For e.g. one data document in MongoDB can have five columns and the other one in the same collection can have ten columns. 
+Also, MongoDB database are faster as compared to SQL databases due to efficient indexing and storage techniques.
+7.Compare MongoDB and CouchDB at high level.
+Although both of these databases are document oriented, MongoDB is a better choice for applications which need dynamic queries and good performance on a very big database. On the other side, 
+CouchDB is better used for applications with occasionally changing queries and pre-defined queries.
+8.Does MongoDB support foreign key constraints?
+No. MongoDB does not support such relationships.
+9.Does MongoDB support ACID transaction management and locking functionalities?
+No. MongoDB does not support default multi-document ACID transactions. However, MongoDB provides atomic operation on a single document.
+10.How can you achieve primary key - foreign key relationships in MongoDB?
+By default MongoDB does not support such primary key - foreign key relationships. However, we can achieve this concept by embedding one document inside another. Foe e.g. an address document can be embedded inside customer document.
+11.What are Indexes in MongoDB?
+Indexes support the efficient execution of queries in MongoDB. Without indexes, MongoDB must perform a collection scan, i.e. scan every document in a collection, to select those documents that match the query statement. 
+If an appropriate index exists for a query, MongoDB can use the index to limit the number of documents it must inspect.
+12.How many indexes does MongoDB create by default for a new collection?
+By default, MongoDB created the _id collection for every collection.
+13.What is a covered query in MongoDB?
+fields used in the query are part of an index used in the query, and
+the fields returned in the results are in the same index
+14.Does MongoDB provide a facility to do text searches? How?
+Yes. MongoDB supports creating text indexes to support text search inside string content. This was a new feature which can introduced in version 2.6.
+15.What happens if an index does not fit into RAM?
+If the indexes do not fit into RAM, MongoDB reads data from disk which is relatively very much slower than reading from RAM.
+
