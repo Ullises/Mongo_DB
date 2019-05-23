@@ -1,0 +1,140 @@
+////Cluster of Questions about MongoDB////
+####MongoDB as data base engine####
+1.What is MongoDB?
+It's a document database which provides high performance, high availability and easy scalability, and 
+flexibility, and an advanced indexing and query model. it stores the data in BSON format which is a 
+binary representation of JSON and it contains more data types than JSON. This means that instead of 
+saving the data in registers, it saves the data in documents.
+
+###Basic Commands###
+3.What is "namespace" in MongoDB?
+ongoDB stores BSON (Binary Interchange and Structure Object Notation) objects in the collection. 
+The concatenation of the collection name and database name is called a namespace. 
+4.What does ‘namespace’ refer in MongoDB?
+Collections in MongoDB store in BSON objects. So if we concatenate the 
+database name that we are using and also the collection name in our 
+program with a certain period in between is what we call as ‘namespace’.
+5.When do we use Namespace in MongoDB?
+During sequencing of the names of the database and collection name Namespace is used.
+
+###Usage Of MongoDB###
+6. Where can we use MongoDB?
+-We use MongoDB as the primary data store for operational applications with real-time requirements. 
+MongoDB is fit to use for 60%-80% of the applications that are developing in today’s world.
+7. Does MongoDb require a lot of RAM?
+MondoDB uses the free memory that is on the computer as its cache..
+8. When should we use MongoDB?
+If you can represent your data in a form of a bunch of documents, MongoBD is the option.
+9. When should not we use Mongo DB?
+If you would rather imagine your data as a bunch of interconnected tables, MongoDB would not be the right option.
+10. Working as an analytic tool?
+MongoDB provides a custom map/reduce implementation for those simple relationships on documents or parameters.
+11. Advantages using MongoDB?
+        1.Document can have any structure within one collection.
+	2. Good speed
+	3. Good means for replication
+12. Where can MongoDB be used?
+although it is often said that NoSQL databases have a narrow scope of application, 
+MongoDB can be used in many of the projects we develop today.
+Any application that needs to store semi-structured data can use MongoDB.
+
+###MongoDB and SQL Database Manager###
+13. How is MongoDB better than other SQL databases?
+ongoDB allows a highly flexible and scalable document structure. 
+For example, one data document in MongoDB can have five columns and the other one in the same collection can have ten columns. 
+Also, MongoDB database are faster as compared to SQL databases due to efficient indexing and storage techniques.
+14. Does MongoDB support SQL?
+Not directly, no. However, MongoDB does support a rich query language of 
+its own.
+15. What are differences between MongoDB and MySQL?
+Both these databases are free and open source.
+The speed in which your queries are being processed in MongoDB is fast 
+as compared to MySQL. The way in which data is being represented in 
+MongoDB and MySQL is also very different.
+16. How does MongoDB address SQL or Query injection?
+As a client program assembles a query in MongoDB, it builds a BSON 
+object, not a string. Thus traditional SQL injection attacks are not a 
+problem. More details and some nuances are covered below.
+17. MongoDB VS MySQL
+It depends on the problem you face, if you have a database with a structure already defined,
+then MySQL is for you, if your database does not have an apparent order then MongoDb is what you need. 
+the difference is that currently most data banks are presented without any specific order so 
+mongoDb is having more presence.
+18. What is difference between MongoDB and SQL or NoSQL between SQL?
+In MongoDB, development is simplified as its documents map naturally to modern, object-oriented programming languages. 
+In SQL, we need object-relational mapping (ORM) layer that translates objects in code to relational tables. Also,In MongoDB, 
+each document can store data with different attributes from other documents. With JSON documents, we can add new attributes 
+when we need to, without having to alter a centralized database schema. But in a relational database, this causes downtime 
+and significant performance overhead.
+19. MongoDB's databases are great when you usually know where your data is. With Mongo, the related data is either nested in 
+the parent data or it has primary/foreign keys. In the other hand, if you are need to use aggregate functions and feel the need 
+to query data in complex ways that using Mongo can't achieved through simple relations, use MySQL.
+
+###Collections and Databases###
+20. What is collection in MongoDB?
+A collection is a group of documents. If a document is the MongoDB analog of a row in a relational database, then collection is 
+the analog to a table. Collections have dynamic schemas. This means that the documents within a single collection can have any 
+number of different shapes. 
+For example, both the following documents can be stored in a single collection.
+21. How do I create a database and a collection?
+If a database does not exist, MongoDB creates the database when you 
+first store data for that database.
+If a collection does not exist, MongoDB creates the collection when you 
+first store data for that collection.
+22. How do I define or alter the collection schema?
+You do not need to specify a schema for a collection in MongoDB. 
+Although it is common for the documents in a collection to have a 
+largely homogeneous structure.
+23. How does an index build affect database performance?
+When building an index on a collection, the database that holds the 
+collection is unavailable for read or write operations until the index 
+build completes. If you need to build a large index, consider building 
+the index in the background.
+24. How to filter data of a collection by date?
+Assuming that you do not have the date field in the Collection, with the ObjectId you 
+can have the date that the application was registered you can see it in the following way:
+> ObjectId.getTimestamp()
+25. What is a Namespace in MongoDB?
+A Namespace is the concatenation of the database name and collection name. For e.g. school.students with school as the database and students as the collection.
+26. How does a collection differ from a table?
+Instead of tables, a MongoDB database stores its data in collections.
+A collection holds one or more BSON documents. Documents are analogous
+to records or rowsin a relational database table. Each document has one or more
+fields; fields are similar to the columns in a relational database table.
+27. How does MongoDB provide consistency?
+MongoDB uses the reader-writer locks, allowing simultaneous readers to access any
+supply like a database or any collection. But always offers private access to
+singles writes.
+28. How many indexes by default we can create for a new collection in MongoDB?
+By default, MongoDB created the _id collection for each and every collection.
+29. How do I define or alter the collection schema?
+You do not need to specify a schema for a collection in MongoDB. Although it is common for the documents in a collection to have a largely homogeneous structure, 
+it is not a requirement; i.e. documents in a single collection do not need to have the same set of fields. 
+The data type for a field can differ across documents in a collection as well.
+30. When to use a single collection on MongoDB?
+Almost never, applications have structure, and deal with data containing structure even if that structure is some form of meta-structure.
+31.Collection per day or Database per day?
+The better to fit is a collection per day for the map/reduce work to summarize the data.
+ 
+###Indexes###
+32. What are indexes in MongoDB?
+Indexes are special structures in MongoDB, which stores a small portion of the data set in an easy to traverse form. 
+Ordered by the value of the field specified in the index, the index stores the value of a specific field or set of fields.
+33. Does MongoDB handle caching?
+es. MongoDB keeps most recently used data in RAM. If you have created 
+indexes for your queries and your working data set fits in RAM, MongoDB 
+serves all queries from memory.
+34. How do I see what indexes exist on a collection?
+To list a collection’s indexes, use the db.collection.getIndexes() 
+method.
+35. Explain the situation when an index does not fit into RAM?
+When an index is too huge to fit into RAM, then MongoDB reads the index, which is
+faster than reading RAM because the indexes easily fit into RAM if the server has
+got RAM for indexes along with the remaining set.
+36. How many indexes by default we can create for a new collection in MongoDB?
+By default, MongoDB created the _id collection for each and every collection.
+37. Explain what are indexes in MongoDB?
+Indexes are special structures in MongoDB, which stores a small portion of the data set in an easy to traverse form. Ordered by 
+the value of the field specified in the index, the index stores the value of a specific field or set of fields.
+
+
